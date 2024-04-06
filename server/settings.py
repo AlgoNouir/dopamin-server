@@ -18,9 +18,9 @@ import datetime
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Library Admin",
-    "site_header": "Library",
-    "site_brand": "FORTEENALL",
+    "site_title": "دوپینگ ادمین",
+    "site_header": "دوپینگ",
+    "site_brand": "دوپینگ",
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
@@ -88,6 +88,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://dopamin.liara.run",
     "http://dopamin.liara.run",
     "http://127.0.0.1:3000",
+    "http://localhost:3000",
 ]
 
 
