@@ -646,9 +646,6 @@ data = [
 ]
 
 class Command(RefCommand):
-    def add_arguments(self, parser):
-        # get app nam}
-        parser.add_argument("app", type=str)
 
     def handle(self, *args, **options):
         
