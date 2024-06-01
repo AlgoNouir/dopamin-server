@@ -1,0 +1,49 @@
+import enum
+from django.contrib import admin
+from core.models import RefModel
+from django.db import models
+from models.main.item import ItemModel
+
+    
+    
+class OrderItem(RefModel):
+    
+    class Meta:
+        
+        verbose_name_plural='موارد سفارشات'
+        verbose_name='موارد سفارش'
+        
+    
+    parent = models.ForeignKey("orders.OrderModel", on_delete=models.CASCADE, verbose_name="سفارش والد")
+    item = models.ForeignKey(ItemModel, on_delete=models.CASCADE, verbose_name="منوی سفارش داده شده")
+    count = models.IntegerField("تعداد")
+    
+    def __str__(self):
+        return f"{self.parent} - {self.item} - {self.count} عدد"
+    
+    
+class OrderStatus(models.IntegerChoices):
+    
+    PENDING = 1, "در حال تحویل"
+    SENDED = 2, "تحویل داده شده"
+    DONE = 3, "پرداخت شده"
+
+class OrderModel(RefModel):
+    
+    class Meta:
+        
+        verbose_name_plural='سفارشات'
+        verbose_name='سفارش'
+    
+    status = models.IntegerField(verbose_name="تحویل داده شده", choices=OrderStatus.choices, default=OrderStatus.PENDING)
+    desc = models.TextField("توضیحات", null=True, blank=True, max_length=10000)
+    
+    
+    @admin.display(description="قیمت سفارش (تومان)")
+    def price(self):
+        price = OrderItem.objects.filter(parent_id=self.pk).aggregate(priceSum=models.Sum("item__price"))['priceSum']
+        return "{:,}".format(price)
+    
+    
+    def __str__(self):
+        return f"سفارش {self.pk}"

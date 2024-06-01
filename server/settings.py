@@ -107,7 +107,9 @@ DEPENDENCIES = [
 
 MAIN_APPS = [
     'models.main.apps.MainConfig',
-    'core',]
+    'models.orders.apps.OrdersConfig',
+    'core',
+]
 
 
 INSTALLED_APPS = [

@@ -13,3 +13,7 @@ class ItemModel(RefModel):
     price = models.IntegerField(verbose_name="قیمت", help_text="""""")
     desc = models.TextField(verbose_name="توضیحات", help_text="""""", max_length=None)
     category = models.ForeignKey("main.CategoryModel", verbose_name="دسته بندی", help_text="""""", on_delete=models.CASCADE)
+    
+    
+    def __str__(self):
+        return f"{self.name} - ({self.price})"
