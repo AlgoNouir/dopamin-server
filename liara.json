@@ -1,6 +1,6 @@
 {
     "platform": "django",
-    "app": "dopamin-server",
+    "app": "doping-server",
     "disks": [
         {
             "name": "disk",
