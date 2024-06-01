@@ -689,6 +689,7 @@ class Command(RefCommand):
             i = ItemModel(
                 name=item["name"],
                 price=item["price"],
+                desc="کلیه آبمیوه ها به درخواست مشتری ترکیب میگردد",
                 category=categories[item["category_id"] - 2],
             )
             
