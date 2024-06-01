@@ -22,7 +22,7 @@ class CategoryPanel(ImportExportMixin, admin.ModelAdmin):
 
 # --------------------------------------------------------- order
 
-class OrderItemModelInline(admin.StackedInline):
+class OrderItemModelInline(admin.TabularInline):
     model = OrderItem
 
 @admin.register(OrderModel)

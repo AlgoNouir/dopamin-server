@@ -16,7 +16,7 @@ class OrderItem(RefModel):
     
     parent = models.ForeignKey("orders.OrderModel", on_delete=models.CASCADE, verbose_name="سفارش والد")
     item = models.ForeignKey(ItemModel, on_delete=models.CASCADE, verbose_name="منوی سفارش داده شده")
-    count = models.IntegerField("تعداد")
+    count = models.IntegerField("تعداد", default=1)
     
     def __str__(self):
         return f"{self.parent} - {self.item} - {self.count} عدد"
