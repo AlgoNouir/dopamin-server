@@ -4,7 +4,8 @@ from rest_framework import status
 from rest_framework import serializers
 from models.main.category import CategoryModel
 from models.main.item import ItemModel
-
+from django.shortcuts import render
+from models.orders.order import OrderModel
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -43,3 +44,14 @@ class MainData(APIView):
         }
         
         return Response(response, status=status.HTTP_200_OK)
+    
+    
+class Factor(APIView):
+    
+    def get(self, request, factorID):
+        
+        
+        order = OrderModel.objects.get(pk=factorID)
+        orderItems = order.items
+        
+        return render(request, "pdf.html", {"order":order, "items":orderItems})

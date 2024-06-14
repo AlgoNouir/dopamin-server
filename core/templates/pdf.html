@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاکتور فروش</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f8fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            padding: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #1da1f2;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .details {
+            padding: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            text-align: center;
+        }
+
+        .details p {
+            margin: 0;
+            color: #657786;
+            font-size: 14px;
+        }
+
+        .products {
+            padding: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            text-align: center;
+        }
+
+        .products h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #14171a;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e1e8ed;
+            text-align: center;
+            font-size: 14px;
+            color: #14171a;
+        }
+
+        th {
+            background-color: #f5f8fa;
+        }
+
+        .total {
+            padding: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            text-align: center;
+        }
+
+        .total p {
+            margin: 0;
+            color: #14171a;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .total td {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1da1f2;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+            color: #657786;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>دوپینگ</h1>
+        </div>
+        <div class="products">
+            <h2>خرید های شما</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>محصول</th>
+                        <th>تعداد</th>
+                        <th>قیمت واحد (تومان)</th>
+                        <th>قیمت کل (تومان)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for item in items%}
+                    <tr>
+                        <td>{{item.item.name}}</td>
+                        <td>{{item.count}}</td>
+                        <td>{{item.itemPrice}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+                <tfoot>
+                    <tr class="total">
+                        <td colspan="3">مجموع قابل پرداخت:</td>
+                        <td>{{order.price}} تومان</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="footer">
+            <p>با تشکر از خرید شما. ما افتخار می‌کنیم که شما را به عنوان مشتری خود داریم.</p>
+        </div>
+    </div>
+</body>
+
+</html>

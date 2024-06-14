@@ -18,6 +18,15 @@ class OrderItem(RefModel):
     item = models.ForeignKey(ItemModel, on_delete=models.CASCADE, verbose_name="منوی سفارش داده شده")
     count = models.IntegerField("تعداد", default=1)
     
+    @property
+    def price(self):
+        return "{:,}".format(self.item.price*self.count)
+    
+    
+    @property
+    def itemPrice(self):
+        return "{:,}".format(self.item.price)
+    
     def __str__(self):
         return f"{self.parent} - {self.item} - {self.count} عدد"
     
@@ -47,3 +56,9 @@ class OrderModel(RefModel):
     
     def __str__(self):
         return f"سفارش {self.pk}"
+    
+    
+    @property
+    def items(self):
+        return OrderItem.objects.filter(parent_id=self.pk)
+    
