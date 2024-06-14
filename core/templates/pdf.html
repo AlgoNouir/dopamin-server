@@ -5,7 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فاکتور فروش</title>
+    <script>
+    </script>
     <style>
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+
+        @media print {
+            @page {
+                size: 400px 700px;
+            }
+        }
+
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #f5f8fa;
@@ -14,7 +27,6 @@
         }
 
         .container {
-            max-width: 600px;
             margin: 20px auto;
             background-color: #fff;
             border-radius: 10px;
@@ -101,6 +113,7 @@
         .footer {
             padding: 20px;
             text-align: center;
+            margin-top: 50px;
         }
 
         .footer p {
@@ -112,7 +125,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="root">
         <div class="header">
             <h1>دوپینگ</h1>
         </div>
@@ -150,5 +163,12 @@
         </div>
     </div>
 </body>
+<script>
+    window.print();
+    window.onafterprint = () => {
+        window.close()
+    };
+
+</script>
 
 </html>
