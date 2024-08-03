@@ -18,9 +18,9 @@ import datetime
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "دوپینگ ادمین",
-    "site_header": "دوپینگ",
-    "site_brand": "دوپینگ",
+    "site_title": "کافه کاپ ادمین",
+    "site_header": "کافه کاپ",
+    "site_brand": "کافه کاپ",
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
