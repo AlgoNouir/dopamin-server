@@ -121,8 +121,8 @@ ALLOWED_HOSTS = ["*"]
 
 # cors
 CORS_ALLOWED_ORIGINS = [
-    "https://doping.liara.run",
-    "http://doping.liara.run",
+    "https://cup.liara.run",
+    "http://cup.liara.run",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
