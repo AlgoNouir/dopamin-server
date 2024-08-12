@@ -44,4 +44,4 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
     
     inlines = [OrderItemModelInline]
     list_display = ["pk", "status", "desc", "price", 'printFactor', 'ordersItems']
-    list_filter = ['status']
+    list_filter = ['status', "created_at"]
