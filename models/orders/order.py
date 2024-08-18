@@ -51,7 +51,9 @@ class OrderModel(RefModel):
     
     @admin.display(description="قیمت سفارش (تومان)")
     def price(self):
-        price = OrderItem.objects.filter(parent_id=self.pk).aggregate(priceSum=models.Sum("item__price"))['priceSum']
+        price = 0
+        for item in OrderItem.objects.filter(parent_id=self.pk):
+            price += int(item.item.price) * item.count 
         return "{:,}".format(price)
     
     
