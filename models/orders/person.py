@@ -6,3 +6,6 @@ class Person(models.Model):
     
     name = models.CharField("نام مشتری", max_length=100)
     
+    
+    def __str__(self):
+        return self.name

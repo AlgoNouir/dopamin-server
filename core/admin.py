@@ -50,5 +50,5 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
         return ' - '.join([f"{item.item.name} {item.count}" for item in obj.items])
     
     inlines = [OrderItemModelInline]
-    list_display = ["pk", "status", "desc", "price", 'printFactor', 'ordersItems']
+    list_display = ["pk", "status", "person", "desc", "price", 'printFactor', 'ordersItems']
     list_filter = ['status', "created_at", "person"]
