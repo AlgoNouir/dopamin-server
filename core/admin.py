@@ -6,8 +6,15 @@ from models.main.item import ItemModel
 from models.orders.order import OrderModel, OrderItem
 from django.utils.html import mark_safe
 from django.shortcuts import render 
+from models.orders.person import Person
 
 
+@admin.register(Person)
+class PersonPanel(ImportExportMixin, admin.ModelAdmin):
+    
+    list_display = ['pk', 'name']
+    list_filter=[]
+    
 
 # --------------------------------------------------------- category
 
@@ -44,4 +51,4 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
     
     inlines = [OrderItemModelInline]
     list_display = ["pk", "status", "desc", "price", 'printFactor', 'ordersItems']
-    list_filter = ['status', "created_at"]
+    list_filter = ['status', "created_at", "person"]

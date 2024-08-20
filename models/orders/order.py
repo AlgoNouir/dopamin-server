@@ -4,7 +4,7 @@ from core.models import RefModel
 from django.db import models
 from models.main.item import ItemModel
 from django.http import FileResponse
-
+from models.orders.person import Person
     
     
 class OrderItem(RefModel):
@@ -47,7 +47,7 @@ class OrderModel(RefModel):
     
     status = models.IntegerField(verbose_name="تحویل داده شده", choices=OrderStatus.choices, default=OrderStatus.PENDING)
     desc = models.TextField("توضیحات", null=True, blank=True, max_length=10000)
-    
+    person = models.ForeignKey(Person, verbose_name="مشتری", null=True, blank=True, on_delete=models.CASCADE)
     
     @admin.display(description="قیمت سفارش (تومان)")
     def price(self):
