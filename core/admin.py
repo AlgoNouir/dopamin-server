@@ -41,7 +41,7 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
     @admin.display(description="پرینت")
     def printFactor(self, obj):
         
-        return mark_safe(f"<a href='http://localhost:8000/factor/{obj.pk}' target='_blank'>پرینت فاکتور</a>")
+        return mark_safe(f"<a href='https://cup-server.liara.run/factor/{obj.pk}' target='_blank'>پرینت فاکتور</a>")
     
     @admin.display(description="سفارشات")
     def ordersItems(self, obj):
