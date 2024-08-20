@@ -53,8 +53,14 @@ class Factor(APIView):
         
         order = OrderModel.objects.get(pk=factorID)
         orderItems = order.items
-        render = {"order":order, "items":orderItems, "desc": ""}
         
-        if order.desc is not None and len(order.desc) > 0:
-            render["desc"] = order.desc
-        return render(request, "pdf.html", render)
+        return render(
+            request,
+            "pdf.html", 
+            {
+                "order":order, 
+                "items":orderItems, 
+                "desc": f"({order.desc})" if order.desc is not None and len(order.desc) > 0 else  "",
+                "person": order.person.name if order.person is not None else "مشتری"
+            }
+        )
