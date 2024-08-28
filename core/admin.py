@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from models.main.category import CategoryModel
 from import_export.admin import ImportExportMixin
+from import_export import resources
 from models.main.item import ItemModel
 from models.orders.order import OrderModel, OrderItem
 from django.utils.html import mark_safe
 from django.shortcuts import render 
 from models.orders.person import Person
-
+import pandas as pd
 
 @admin.register(Person)
 class PersonPanel(ImportExportMixin, admin.ModelAdmin):
@@ -35,6 +36,14 @@ class CategoryPanel(ImportExportMixin, admin.ModelAdmin):
 class OrderItemModelInline(admin.TabularInline):
     model = OrderItem
 
+
+class OrderModelResource(resources.ModelResource):
+
+    class Meta:
+        model = OrderModel
+        fields = ('id', 'created_at')
+
+        
 @admin.register(OrderModel)
 class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
     
@@ -49,6 +58,18 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
             
         return ' - '.join([f"{item.item.name} {item.count}" for item in obj.items])
     
+    
+    @admin.action(description="دانلود لیست روزانه")
+    def listOrderCalc(self, request, queryset):
+        # ItemModel.objects.filter(pk__in)
+        sumPrice = 0
+        for order in queryset:
+            sumPrice += order._price
+                
+    
     inlines = [OrderItemModelInline]
     list_display = ["pk", "status", "person", "desc", "price", 'printFactor', 'ordersItems']
     list_filter = ['status', "created_at", "person"]
+    actions = [listOrderCalc]
+    resource_classes = [OrderModelResource]
+    

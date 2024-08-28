@@ -49,12 +49,16 @@ class OrderModel(RefModel):
     desc = models.TextField("توضیحات", null=True, blank=True, max_length=10000)
     person = models.ForeignKey(Person, verbose_name="مشتری", null=True, blank=True, on_delete=models.CASCADE)
     
-    @admin.display(description="قیمت سفارش (تومان)")
-    def price(self):
+    @property
+    def _price(self):
         price = 0
         for item in OrderItem.objects.filter(parent_id=self.pk):
             price += int(item.item.price) * item.count 
-        return "{:,}".format(price)
+        return price
+    
+    @admin.display(description="قیمت سفارش (تومان)")
+    def price(self):
+        return "{:,}".format(self._price)
     
     
     def __str__(self):
