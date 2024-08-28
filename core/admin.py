@@ -8,7 +8,6 @@ from models.orders.order import OrderModel, OrderItem
 from django.utils.html import mark_safe
 from django.shortcuts import render 
 from models.orders.person import Person
-import pandas as pd
 
 @admin.register(Person)
 class PersonPanel(ImportExportMixin, admin.ModelAdmin):
