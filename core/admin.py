@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from models.main.category import CategoryModel
 from import_export.admin import ImportExportMixin
-from import_export import resources
+from import_export import resources, fields
 from models.main.item import ItemModel
 from models.orders.order import OrderModel, OrderItem
 from django.utils.html import mark_safe
@@ -38,10 +38,17 @@ class OrderItemModelInline(admin.TabularInline):
 
 
 class OrderModelResource(resources.ModelResource):
+    price = fields.Field(attribute="_price", column_name="price")
+
+    def after_export(self, queryset, data, *args, **kwargs):
+        total = 0
+        for order in queryset:
+            total += order._price
+        data.append([total, f"{queryset.count()} count",  ""])
 
     class Meta:
         model = OrderModel
-        fields = ('id', 'created_at')
+        fields = ('id', 'created_at', 'price')
 
         
 @admin.register(OrderModel)
