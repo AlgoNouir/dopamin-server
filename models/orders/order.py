@@ -45,15 +45,18 @@ class OrderModel(RefModel):
         verbose_name_plural='سفارشات'
         verbose_name='سفارش'
     
-    status = models.IntegerField(verbose_name="تحویل داده شده", choices=OrderStatus.choices, default=OrderStatus.PENDING)
-    desc = models.TextField("توضیحات", null=True, blank=True, max_length=10000)
     person = models.ForeignKey(Person, verbose_name="مشتری", null=True, blank=True, on_delete=models.CASCADE)
+    status = models.IntegerField(verbose_name="تحویل داده شده", choices=OrderStatus.choices, default=OrderStatus.PENDING)
+    offer = models.IntegerField(verbose_name="درصد تخفیف", default=0)
+    desc = models.TextField("توضیحات", null=True, blank=True, max_length=10000)
     
     @property
     def _price(self):
         price = 0
         for item in OrderItem.objects.filter(parent_id=self.pk):
             price += int(item.item.price) * item.count 
+        
+        price *= (100 - self.offer)/100
         return price
     
     @admin.display(description="قیمت سفارش (تومان)")

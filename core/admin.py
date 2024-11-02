@@ -74,7 +74,7 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
                 
     
     inlines = [OrderItemModelInline]
-    list_display = ["pk", "status", "person", "desc", "price", 'printFactor', 'ordersItems']
+    list_display = ["pk", "status", "person", "desc", "price", "offer", 'printFactor', 'ordersItems']
     list_filter = ['status', "created_at", "person"]
     actions = [listOrderCalc]
     resource_classes = [OrderModelResource]
