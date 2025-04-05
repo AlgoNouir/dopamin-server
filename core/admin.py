@@ -8,6 +8,8 @@ from models.orders.order import OrderModel, OrderItem
 from django.utils.html import mark_safe
 from django.shortcuts import render 
 from models.orders.person import Person
+from django.utils.translation import gettext_lazy as _
+import datetime
 
 @admin.register(Person)
 class PersonPanel(ImportExportMixin, admin.ModelAdmin):
@@ -49,6 +51,49 @@ class OrderModelResource(resources.ModelResource):
         model = OrderModel
         fields = ('id', 'created_at', 'price')
 
+
+# Custom filter for start time (from)
+class StartTimeFilter(admin.SimpleListFilter):
+    title = _('از ساعت')
+    parameter_name = 'start_hour'
+
+    def lookups(self, request, model_admin):
+        # Create options for all 24 hours
+        return [(str(hour), f'{hour:02d}:00') for hour in range(24)]
+
+    def queryset(self, request, queryset):
+        if self.value() is not None:
+            try:
+                hour = int(self.value())
+                return queryset.filter(created_at__hour__gte=hour)
+            except (ValueError, TypeError):
+                pass
+        return queryset
+
+
+# Custom filter for end time (to)
+class EndTimeFilter(admin.SimpleListFilter):
+    title = _('تا ساعت')
+    parameter_name = 'end_hour'
+
+    def lookups(self, request, model_admin):
+        # Create options for all 24 hours
+        return [(str(hour), f'{hour:02d}:59') for hour in range(24)]
+
+    def queryset(self, request, queryset):
+        if self.value() is not None:
+            try:
+                hour = int(self.value())
+                # If it's the last hour of the day (23), include all minutes up to 59
+                if hour == 23:
+                    return queryset.filter(created_at__hour__lte=hour, created_at__minute__lte=59)
+                else:
+                    return queryset.filter(created_at__hour__lte=hour)
+            except (ValueError, TypeError):
+                pass
+        return queryset
+
+
         
 @admin.register(OrderModel)
 class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
@@ -72,10 +117,9 @@ class OrdersPanel(ImportExportMixin, admin.ModelAdmin):
         for order in queryset:
             sumPrice += order._price
                 
-    
     inlines = [OrderItemModelInline]
     list_display = ["pk", "status", "person", "desc", "price", "offer", 'printFactor', 'ordersItems']
-    list_filter = ['status', "created_at", "person"]
+    list_filter = ['status', "created_at", "person", StartTimeFilter, EndTimeFilter]
     actions = [listOrderCalc]
     resource_classes = [OrderModelResource]
-    
+

@@ -1,0 +1,33 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  
+  {% if show_time_filter %}
+  <div class="time-filter-container" style="margin-bottom: 15px; padding: 10px; background-color: #f8f8f8; border-radius: 4px;">
+    <h3 style="margin-top: 0;">فیلتر بر اساس بازه زمانی سفارشی</h3>
+    <form method="get" action="">
+      {% for key, value in request.GET.items %}
+        {% if key != 'start_time' and key != 'end_time' %}
+          <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endif %}
+      {% endfor %}
+      
+      <!-- Always include time_range=custom when using this form -->
+      <input type="hidden" name="time_range" value="custom">
+      
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <label for="start_time">از ساعت:</label>
+        <input type="time" id="start_time" name="start_time" value="{{ start_time }}">
+        
+        <label for="end_time">تا ساعت:</label>
+        <input type="time" id="end_time" name="end_time" value="{{ end_time }}">
+        
+        <button type="submit" class="button" style="background-color: #417690; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">اعمال فیلتر</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+{% endblock %}
+

@@ -1,4 +1,4 @@
-#!/home/nora/projects/coffe-cup/django/venv/bin/python
+#!/home/aliroide/Documents/dopamin-server/venv/bin/python
 
 # http://www.python.org/doc/2.4.4/lib/module-itertools.html
 import itertools

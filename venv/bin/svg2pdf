@@ -1,4 +1,4 @@
-#!/home/nora/projects/coffe-cup/django/venv/bin/python
+#!/home/aliroide/Documents/dopamin-server/venv/bin/python
 """A simple converter from SVG to PDF.
 
 For further information please check the file README.txt!
